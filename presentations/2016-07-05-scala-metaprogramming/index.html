@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Title</title>
+    <meta charset="utf-8">
+    <style>
+      @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+      @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
+      @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+
+      body { font-family: 'Droid Serif'; }
+      h1, h2, h3 {
+        font-family: 'Yanone Kaffeesatz';
+        font-weight: normal;
+      }
+      .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
+    </style>
+  </head>
+  <body>
+    <textarea id="source">
+
+class: center, middle
+
+# Meta-programming
+
+Programs are data
+
+---
+
+# Macros are dead, long live macros
+
+2.11 and 2.12 macro's
+**Blackbox**: Macro is a "black box", similar to method call
+**Whitebox**: Macro can change their ype, alter compiler internals
+
+scala.meta:
+New and improvemed implementation of blackbox macros
+
+## Subkop?
+
+asd
+
+---
+
+# Slide 2
+
+---
+
+# Example macro
+
+```
+class Table[T](val query: Query[T]) {
+  def map[U](f : T => U): Table[U] = macro TableMacros.map
+}
+
+object TableMacros {
+
+  // TODO: copy LINQ implementation here
+  def toSQL(c: Context)(code : c.Tree) : c.Tree = ???
+
+  def map(c: Context)(f: *c.Tree*): c.Tree = {
+    val sourceTable = c.prefix
+    q"Table.subquery(from = ${sourceTable}, q = ${toSQL(f)})"
+  }
+}
+```
+
+    </textarea>
+    <script src="https://gnab.github.io/remark/downloads/remark-latest.min.js">
+    </script>
+    <script>
+      var slideshow = remark.create();
+    </script>
+  </body>
+</html>
