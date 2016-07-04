@@ -7,6 +7,7 @@
       @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
       @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
       @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+	  @import
 
       body { font-family: 'Droid Serif'; }
       h1, h2, h3 {
@@ -15,36 +16,82 @@
       }
       .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
     </style>
+	<link rel="stylesheet" href="style.css" />
+	<!--<link rel="stylesheet" href="agate.min.css">-->
   </head>
   <body>
     <textarea id="source">
 
 class: center, middle
 
-# Meta-programming
+# The Future of Scala Metaprogramming
 
-Programs are data
+&nbsp;
 
----
+&nbsp;
 
-# Macros are dead, long live macros
 
-2.11 and 2.12 macro's
-**Blackbox**: Macro is a "black box", similar to method call
-**Whitebox**: Macro can change their ype, alter compiler internals
-
-scala.meta:
-New and improvemed implementation of blackbox macros
-
-## Subkop?
-
-asd
+http://goo.gl/F29sd9
 
 ---
 
-# Slide 2
+# Talks
+
+* ⇒ Metaprogramming 2.0 - Eugene Burmako <br /> https://youtu.be/wii5UPtu1_g (Scala Days 2016 NYC)
+* ⇒ Dotty Linker: <code>...</code> - Dmitry Patrashko <br /> https://youtu.be/h8KBLF0AgUc (Scala Days 2016 NYC)
+
+* Scalan: <code>...</code> meta-programming framework - Alexander Slesarenko
+* Data centric Metaprogramming - Vlad Ureche - https://youtu.be/83VfxITTNPE (Spark Summit Europe 2015)
 
 ---
+
+# Macros
+
+```
+type Macro = Code ⇒ Code
+```
+
+* Treating programs as data
+* Transform programs
+* Compile-time reflection
+* Extending the language/compiler 
+
+---
+
+# Macro support
+
+2.10 - 2.12: Whitebox macros
+
+2.11 - 2.12: Blackbox macros
+
+2.11 - 2.1x, Dotty: scala.meta macros (blackbox)
+
+---
+
+# Scala.meta
+
+![New and improved](newimproved.jpg)
+
+---
+
+# Scala.meta
+
+* Easier and less boilerplate
+* Compiler implementation independent<br />&nbsp;&nbsp;&nbsp;dotty, scala native, scala.js
+* IDE support
+* Improved parsing (dialects, formatting)
+
+---
+
+# Scala.meta roadmap:
+
+* Typechecking, name resolution, implicit interference
+* Inline macros
+
+
+---
+
+Aantal examples
 
 # Example macro
 
@@ -58,18 +105,34 @@ object TableMacros {
   // TODO: copy LINQ implementation here
   def toSQL(c: Context)(code : c.Tree) : c.Tree = ???
 
-  def map(c: Context)(f: *c.Tree*): c.Tree = {
+  def map(c: Context)(f: c.Tree): c.Tree = {
     val sourceTable = c.prefix
     q"Table.subquery(from = ${sourceTable}, q = ${toSQL(f)})"
   }
 }
 ```
 
+---
+
+# Dotty
+
+* TASTY: Typed AST
+* Distribution format of Dotty scala binaries
+
+---
+
+# Dotty linker
+
+* Whole-program optimization
+
     </textarea>
     <script src="https://gnab.github.io/remark/downloads/remark-latest.min.js">
     </script>
     <script>
-      var slideshow = remark.create();
+      var slideshow = remark.create({
+		highlightLanguage: 'scala',
+		highlightStyle: 'solarized-light',
+	  });
     </script>
   </body>
 </html>
