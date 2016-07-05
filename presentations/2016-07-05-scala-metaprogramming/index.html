@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Title</title>
+    <title>The future of scala metaprogramming</title>
     <meta charset="utf-8">
     <style>
       @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
@@ -16,8 +16,7 @@
       }
       .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
     </style>
-	<link rel="stylesheet" href="style.css" />
-	<!--<link rel="stylesheet" href="agate.min.css">-->
+	  <link rel="stylesheet" href="style.css" />
   </head>
   <body>
     <textarea id="source">
@@ -35,15 +34,35 @@ http://goo.gl/F29sd9
 
 ---
 
+class: top
+
 # Talks
 
-* ⇒ Metaprogramming 2.0 - Eugene Burmako <br /> https://youtu.be/wii5UPtu1_g (Scala Days 2016 NYC)
-* ⇒ Dotty Linker: <code>...</code> - Dmitry Patrashko <br /> https://youtu.be/h8KBLF0AgUc (Scala Days 2016 NYC)
+* ⇒ Metaprogramming 2.0 - Eugene Burmako <br /> https://youtu.be/wii5UPtu1_g (Scala Days 2016 NYC)<br />http://goo.gl/xUUxOE (Slides Scala Days 2016 Berlin)
+* ⇒ Dotty Linker: <code>...</code> - Dmitry Patrashko <br /> https://youtu.be/h8KBLF0AgUc (Scala Days 2016 NYC)<br />http://goo.gl/XrGGtH (Slides Scala Days 2016 Berlin)
 
-* Scalan: <code>...</code> meta-programming framework - Alexander Slesarenko
+* Scalan: <code>...</code> - Alexander Slesarenko
 * Data centric Metaprogramming - Vlad Ureche - https://youtu.be/83VfxITTNPE (Spark Summit Europe 2015)
 
+???
+
+Scalan: DSL development/compilation framework
+
+Vlad Ureche: using meta-programming to speed up applications
+
 ---
+
+class: top
+
+# Macros
+
+```
+type Macro = Code ⇒ Code
+```
+
+---
+
+class: top
 
 # Macros
 
@@ -58,13 +77,25 @@ type Macro = Code ⇒ Code
 
 ---
 
+class: top
+
 # Macro support
 
-2.10 - 2.12: Whitebox macros
+2.10: Macro's introduced as experimental feature
 
-2.11 - 2.12: Blackbox macros
+---
 
-2.11 - 2.1x, Dotty: scala.meta macros (blackbox)
+class: top
+
+# Macro support
+
+2.10 - 2.11: Whitebox macros
+
+2.11: Blackbox macros
+
+???
+
+Original plan was to stabalize blackbox macros
 
 ---
 
@@ -73,6 +104,56 @@ type Macro = Code ⇒ Code
 ![New and improved](newimproved.jpg)
 
 ---
+
+class: top
+
+# Macro support
+
+2.10 - 2.12: Whitebox macros
+
+2.11 - 2.12: Blackbox macros
+
+2.10 - 2.12: scala.meta<br />
+
+Dotty: scala.meta<br />
+
+Scala Native: scala.meta<br />
+
+Scala.JS: scala.meta
+
+???
+
+
+---
+
+class: top
+
+# Scala.meta
+
+* Easier and less boilerplate
+
+---
+
+class: top
+
+# Scala.meta
+
+* Easier and less boilerplate
+* Compiler implementation independent<br />&nbsp;&nbsp;&nbsp;dotty, scala native, scala.js
+
+---
+
+class: top
+
+# Scala.meta
+
+* Easier and less boilerplate
+* Compiler implementation independent<br />&nbsp;&nbsp;&nbsp;dotty, scala native, scala.js
+* IDE support
+
+---
+
+class: top
 
 # Scala.meta
 
@@ -83,56 +164,355 @@ type Macro = Code ⇒ Code
 
 ---
 
+class: top
+
 # Scala.meta roadmap:
 
 * Typechecking, name resolution, implicit interference
 * Inline macros
-
+* 2.10, 2.12, scala.js
 
 ---
 
-Aantal examples
+class: top
 
-# Example macro
+# Example: @main
 
 ```
-class Table[T](val query: Query[T]) {
-  def map[U](f : T => U): Table[U] = macro TableMacros.map
+@main object Test {
+   println("hello world")
 }
+```
 
-object TableMacros {
+---
 
-  // TODO: copy LINQ implementation here
-  def toSQL(c: Context)(code : c.Tree) : c.Tree = ???
+class: top
 
-  def map(c: Context)(f: c.Tree): c.Tree = {
-    val sourceTable = c.prefix
-    q"Table.subquery(from = ${sourceTable}, q = ${toSQL(f)})"
+# Example: @main
+
+```
+@main object Test {
+   println("hello world")
+}
+```
+
+↓
+
+```
+object Test {
+  def main(args: Array[String]): Unit = {
+    println("hello world")
   }
 }
 ```
 
 ---
 
-# Dotty
+class: top
 
-* TASTY: Typed AST
-* Distribution format of Dotty scala binaries
+# Example: @main scala.reflect
+
+```
+class main extends scala.annotation.StaticAnnotation {
+  def macroTransform(annottees: Any*): Any =
+    macro Macros.impl
+  }
+
+import scala.reflect.macros.whitebox.Context
+object Macros {
+  def impl(c: Context)(annottees: c.Tree*): c.Tree = {
+    import c.universe.
+    val q"object $name { ..$stats }" = annottees.head
+    val main = q"""
+    def main(args: Array[String]): Unit = { ..$stats }
+    """
+    q"object $name { $main }"
+  }
+}
+```
+
+???
+
+Bad: boilerplate: same amount
+Good: quasiquotes
 
 ---
 
+class: top
+
+# Example: @main scala.meta
+
+```
+import scala.meta._
+class main extends scala.annotation.StaticAnnotation {
+  inline def apply(defn: Any) = meta {
+    val q"object $name { ..$stats }" = defn
+    val main = q"""
+      def main(args: Array[String]): Unit = { ..$stats }
+    """
+    q"object $name { $main }"
+  }
+}
+```
+
+---
+
+class: top
+
+# Example: @main scala.meta
+
+```
+import scala.meta._
+class main extends scala.annotation.StaticAnnotation {
+  inline def apply(defn: Any) = meta {
+    val q"object $name { ..$stats }" = defn
+    val main = q"""
+      def main(args: Array[String]): Unit = { ..$stats }
+    """
+    q"object $name { $main }"
+  }
+}
+```
+
+```
+@main object Test {
+   println("hello world")
+}
+```
+
+---
+
+class: top
+
+# Example: @main scala.meta
+
+```
+import scala.meta._
+class main extends scala.annotation.StaticAnnotation {
+  inline def apply(defn: Any) = meta {
+    val q"object $name { ..$stats }" = defn
+    val main = q"""
+      def main(args: Array[String]): Unit = { ..$stats }
+    """
+    q"object $name { $main }"
+  }
+}
+```
+
+```
+object Test {
+  def main(args: Array[String]): Unit = {
+    println("hello world")
+  }
+}
+```
+
+---
+
+class: top
+
+# Other macro uses
+
+* Scalafmt (parsing)
+* Automatic serialization (Play JSON, Pickling)
+* Performance improvements
+
+---
+
+class: top
+
+# Performance improvements
+
+```
+if(logger.isErrorEnabled) {
+  logger.error(expensiveArgument());
+}
+```
+
+⇔
+
+```
+logger.error(expensiveArguments());
+```
+
+---
+
+class: top
+
+# Performance improvements
+
+```
+val arr = (1 to 10000000).toArray
+arr.reduce(_ + _).toDouble / arr.length
+```
+
+⇔
+
+```
+5000000.5
+```
+
+???
+
+It will take scala about a second to determine that the above is indeed that number
+
+---
+
+class: top
+
+# Dotty TASTY
+
+* Typed AST
+* Binary distribution format for dotty
+
+???
+
+Distribution format of Dotty scala binaries
+
+---
+
+class: top
+
 # Dotty linker
 
+Whole-program optimization
+
+* Dead code elimination *for your specific usage*
+* Specialization
+* Inlining
+* Virtual dispatch removal
+* Performance rewrites
+
+???
+
+Specialization normally not viable: 10^n combinations n= program args
+
+---
+
+class: top
+
+# Rewrite rules
+
+```
+import dotty.linker._
+
+@rewrites
+object LoggerOptimization {
+  def error(x: Seq[Int]) =
+    Rewrite(from = logger.error(s),
+            to   = if(logger.isErrorEnabled) logger.error(s) else ())
+```
+
+???
+
+Readability or performance: why not both?
+
+---
+
+class: top
+
+# Rewrite rules
+
+```
+import dotty.linker._
+
+@rewrites
+object LoggerOptimization {
+  def error(x: Seq[Int]) =
+    Rewrite(from = logger.error(s),
+            to   = if(logger.isErrorEnabled) logger.error(s) else ())
+```
+
+Correctness: automatic scalacheck tests (planned)
+
+---
+
+class: top
+
+# Summary
+
+##### Scala.meta
+
+* simplifies meta-programming in Scala
+* Only macro system of dotty, scala native, scala JS
+* High-fidelity parsing
+* No feature parity yet
+
+---
+
+class: top
+
+# Summary
+
+##### Scala.meta
+
+* simplifies meta-programming in Scala
+* Only macro system of dotty, scala native, scala JS
+* High-fidelity parsing
+* No feature parity yet
+
+##### Scala linker
+
 * Whole-program optimization
+* Rewrite rules (performance oriented)
+
+---
+
+class: top
+
+# Summary
+
+##### Scala.meta
+
+* simplifies meta-programming in Scala
+* Only macro system of dotty, scala native, scala JS
+* High-fidelity parsing
+* No feature parity yet
+
+##### Scala linker
+
+* Whole-program optimization
+* Rewrite rules (performance oriented)
+
+http://goo.gl/F29sd9
 
     </textarea>
     <script src="https://gnab.github.io/remark/downloads/remark-latest.min.js">
     </script>
     <script>
       var slideshow = remark.create({
-		highlightLanguage: 'scala',
-		highlightStyle: 'solarized-light',
-	  });
+		    highlightLanguage: 'scala',
+		    highlightStyle: 'solarized-light',
+	   });
     </script>
   </body>
 </html>
+<!--
+---
+
+
+class: top
+
+# Method specialization
+
+```
+def method(arg1: Any, arg2: Any) = ???
+
+method(1,2)
+method("a", "b")
+
+```
+
+⇔
+
+```java
+public void method$ii(int arg1, int arg2) { throw new NotImplementedException(); }
+public void method$oo(Object arg1, Object arg2) { throw new NotImplementedException(); }
+
+methodii(1,2);
+methodoo("a", "b");
+
+```
+
+----
+-->
