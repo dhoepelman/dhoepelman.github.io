@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="MyCalculatorExamples" time="0" tests="2" errors="0" skipped="0" failures="0">
+  <properties>
+    <property name="gopherProxySet" value="false"/>
+    <property name="awt.toolkit" value="sun.lwawt.macosx.LWCToolkit"/>
+    <property name="java.specification.version" value="11"/>
+    <property name="sun.cpu.isalist" value=""/>
+    <property name="sun.jnu.encoding" value="UTF-8"/>
+    <property name="java.class.path" value="/Users/dhoepelman/git/jqwik-samples/jqwik-starter-maven/target/test-classes:/Users/dhoepelman/git/jqwik-samples/jqwik-starter-maven/target/classes:/Users/dhoepelman/.m2/repository/net/jqwik/jqwik/1.6.3/jqwik-1.6.3.jar:/Users/dhoepelman/.m2/repository/org/apiguardian/apiguardian-api/1.1.2/apiguardian-api-1.1.2.jar:/Users/dhoepelman/.m2/repository/net/jqwik/jqwik-api/1.6.3/jqwik-api-1.6.3.jar:/Users/dhoepelman/.m2/repository/org/opentest4j/opentest4j/1.2.0/opentest4j-1.2.0.jar:/Users/dhoepelman/.m2/repository/org/junit/platform/junit-platform-commons/1.8.2/junit-platform-commons-1.8.2.jar:/Users/dhoepelman/.m2/repository/net/jqwik/jqwik-web/1.6.3/jqwik-web-1.6.3.jar:/Users/dhoepelman/.m2/repository/net/jqwik/jqwik-time/1.6.3/jqwik-time-1.6.3.jar:/Users/dhoepelman/.m2/repository/net/jqwik/jqwik-engine/1.6.3/jqwik-engine-1.6.3.jar:/Users/dhoepelman/.m2/repository/org/junit/platform/junit-platform-engine/1.8.2/junit-platform-engine-1.8.2.jar:/Users/dhoepelman/.m2/repository/org/assertj/assertj-core/3.22.0/assertj-core-3.22.0.jar:"/>
+    <property name="java.vm.vendor" value="Homebrew"/>
+    <property name="sun.arch.data.model" value="64"/>
+    <property name="java.vendor.url" value="https://github.com/Homebrew/homebrew-core/issues"/>
+    <property name="user.timezone" value=""/>
+    <property name="java.vm.specification.version" value="11"/>
+    <property name="os.name" value="Mac OS X"/>
+    <property name="sun.java.launcher" value="SUN_STANDARD"/>
+    <property name="user.country" value="NL"/>
+    <property name="sun.boot.library.path" value="/usr/local/Cellar/openjdk@11/11.0.12/libexec/openjdk.jdk/Contents/Home/lib"/>
+    <property name="sun.java.command" value="/Users/dhoepelman/git/jqwik-samples/jqwik-starter-maven/target/surefire/surefirebooter3390761292421084223.jar /Users/dhoepelman/git/jqwik-samples/jqwik-starter-maven/target/surefire 2022-01-14T17-28-59_971-jvmRun1 surefire14806332374361215104tmp surefire_014621913133271727024tmp"/>
+    <property name="jdk.debug" value="release"/>
+    <property name="surefire.test.class.path" value="/Users/dhoepelman/git/jqwik-samples/jqwik-starter-maven/target/test-classes:/Users/dhoepelman/git/jqwik-samples/jqwik-starter-maven/target/classes:/Users/dhoepelman/.m2/repository/net/jqwik/jqwik/1.6.3/jqwik-1.6.3.jar:/Users/dhoepelman/.m2/repository/org/apiguardian/apiguardian-api/1.1.2/apiguardian-api-1.1.2.jar:/Users/dhoepelman/.m2/repository/net/jqwik/jqwik-api/1.6.3/jqwik-api-1.6.3.jar:/Users/dhoepelman/.m2/repository/org/opentest4j/opentest4j/1.2.0/opentest4j-1.2.0.jar:/Users/dhoepelman/.m2/repository/org/junit/platform/junit-platform-commons/1.8.2/junit-platform-commons-1.8.2.jar:/Users/dhoepelman/.m2/repository/net/jqwik/jqwik-web/1.6.3/jqwik-web-1.6.3.jar:/Users/dhoepelman/.m2/repository/net/jqwik/jqwik-time/1.6.3/jqwik-time-1.6.3.jar:/Users/dhoepelman/.m2/repository/net/jqwik/jqwik-engine/1.6.3/jqwik-engine-1.6.3.jar:/Users/dhoepelman/.m2/repository/org/junit/platform/junit-platform-engine/1.8.2/junit-platform-engine-1.8.2.jar:/Users/dhoepelman/.m2/repository/org/assertj/assertj-core/3.22.0/assertj-core-3.22.0.jar:"/>
+    <property name="sun.cpu.endian" value="little"/>
+    <property name="user.home" value="/Users/dhoepelman"/>
+    <property name="user.language" value="en"/>
+    <property name="java.specification.vendor" value="Oracle Corporation"/>
+    <property name="java.version.date" value="2021-07-20"/>
+    <property name="java.home" value="/usr/local/Cellar/openjdk@11/11.0.12/libexec/openjdk.jdk/Contents/Home"/>
+    <property name="file.separator" value="/"/>
+    <property name="basedir" value="/Users/dhoepelman/git/jqwik-samples/jqwik-starter-maven"/>
+    <property name="java.vm.compressedOopsMode" value="Zero based"/>
+    <property name="line.separator" value="&#10;"/>
+    <property name="java.specification.name" value="Java Platform API Specification"/>
+    <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
+    <property name="java.awt.graphicsenv" value="sun.awt.CGraphicsEnvironment"/>
+    <property name="surefire.real.class.path" value="/Users/dhoepelman/git/jqwik-samples/jqwik-starter-maven/target/surefire/surefirebooter3390761292421084223.jar"/>
+    <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
+    <property name="java.runtime.version" value="11.0.12+0"/>
+    <property name="user.name" value="dhoepelman"/>
+    <property name="path.separator" value=":"/>
+    <property name="os.version" value="11.6"/>
+    <property name="java.runtime.name" value="OpenJDK Runtime Environment"/>
+    <property name="file.encoding" value="UTF-8"/>
+    <property name="java.vm.name" value="OpenJDK 64-Bit Server VM"/>
+    <property name="java.vendor.version" value="Homebrew"/>
+    <property name="localRepository" value="/Users/dhoepelman/.m2/repository"/>
+    <property name="java.vendor.url.bug" value="https://github.com/Homebrew/homebrew-core/issues"/>
+    <property name="java.io.tmpdir" value="/var/folders/gn/rdwybry55xzcc8j46mbdw6040000gn/T/"/>
+    <property name="java.version" value="11.0.12"/>
+    <property name="user.dir" value="/Users/dhoepelman/git/jqwik-samples/jqwik-starter-maven"/>
+    <property name="os.arch" value="x86_64"/>
+    <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
+    <property name="java.awt.printerjob" value="sun.lwawt.macosx.CPrinterJob"/>
+    <property name="sun.os.patch.level" value="unknown"/>
+    <property name="java.library.path" value="/Users/dhoepelman/Library/Java/Extensions:/Library/Java/Extensions:/Network/Library/Java/Extensions:/System/Library/Java/Extensions:/usr/lib/java:."/>
+    <property name="java.vm.info" value="mixed mode"/>
+    <property name="java.vendor" value="Homebrew"/>
+    <property name="java.vm.version" value="11.0.12+0"/>
+    <property name="sun.io.unicode.encoding" value="UnicodeBig"/>
+    <property name="java.class.version" value="55.0"/>
+  </properties>
+  <testcase name="summingUpZeros" classname="my.example.project.MyCalculatorExamples" time="0"/>
+  <testcase name="summingUpTwoNumbers" classname="my.example.project.MyCalculatorExamples" time="0"/>
+</testsuite>
