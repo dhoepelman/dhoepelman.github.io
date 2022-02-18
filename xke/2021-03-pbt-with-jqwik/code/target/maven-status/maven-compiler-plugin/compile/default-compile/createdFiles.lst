@@ -1,1 +1,3 @@
-my/example/project/MyCalculator.class
+dev/dhoepelman/articles/jqwik/BigDecimalCalculator.class
+dev/dhoepelman/articles/jqwik/Calculator.class
+dev/dhoepelman/articles/jqwik/DoubleCalculator.class
