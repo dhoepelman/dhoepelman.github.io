@@ -9,10 +9,12 @@ public class BigDecimalCalculator extends Calculator<BigDecimal>{
     private static final MathContext ctx = MathContext.UNLIMITED;
 
     @Override
-    protected BigDecimal from(Number value) {
+    public BigDecimal from(Number value) {
         if(value instanceof BigDecimal v) {
             return v;
         } else if(value instanceof Integer v) {
+            return BigDecimal.valueOf(v);
+        } else if (value instanceof Double v) {
             return BigDecimal.valueOf(v);
         } else {
             return new BigDecimal(value.toString());
@@ -20,32 +22,37 @@ public class BigDecimalCalculator extends Calculator<BigDecimal>{
     }
 
     @Override
-    public BigDecimal plus(BigDecimal op1, BigDecimal op2) {
-        return op1.add(op2);
+    public BigDecimal plus(Number op1, Number op2) {
+        return from(op1).add(from(op2));
     }
 
     @Override
-    public BigDecimal minus(BigDecimal op1, BigDecimal op2) {
-        return op1.subtract(op2);
+    public BigDecimal minus(Number op1, Number op2) {
+        return from(op1).subtract(from(op2));
     }
 
     @Override
-    public BigDecimal multiply(BigDecimal op1, BigDecimal op2) {
-        return op1.multiply(op2);
+    public BigDecimal multiply(Number op1, Number op2) {
+        return from(op1).multiply(from(op2));
     }
 
     @Override
-    public BigDecimal divide(BigDecimal op1, BigDecimal op2) {
-        return op1.divide(op2, RoundingMode.HALF_UP);
+    public BigDecimal divide(Number op1, Number op2) {
+        return from(op1).divide(from(op2), RoundingMode.HALF_UP);
     }
 
     @Override
-    public BigDecimal sqrt(BigDecimal number) {
-        return number.sqrt(ctx);
+    public BigDecimal sqrt(Number number) {
+        return from(number).sqrt(ctx);
     }
 
     @Override
-    public BigDecimal power(BigDecimal base, BigDecimal exponent) {
+    public BigDecimal power(Number base, Number exponent) {
         return null;
+    }
+
+    @Override
+    public String toString() {
+        return "BigDecimalCalculator";
     }
 }

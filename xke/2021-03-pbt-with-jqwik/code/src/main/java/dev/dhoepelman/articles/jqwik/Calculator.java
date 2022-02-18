@@ -5,17 +5,18 @@ import java.util.*;
 public abstract class Calculator<T extends Number> {
 	private final T ZERO = from(0);
 
-	protected abstract T from(Number value);
+	public abstract T from(Number value);
 
-	abstract T plus(T op1, T op2);
-	abstract T minus(T op1, T op2);
-	abstract T multiply(T op1, T op2);
-	abstract T divide(T op1, T op2);
-
-	abstract T sqrt(T number);
-	abstract T power(T base, T exponent);
-
+	abstract T plus(Number op1, Number op2);
 	T sum(List<? extends Number> operands) {
 		return operands.stream().map(this::from).reduce(ZERO, this::plus);
 	}
+
+	abstract T minus(Number op1, Number op2);
+	abstract T multiply(Number op1, Number op2);
+	abstract T divide(Number op1, Number op2);
+
+	abstract T sqrt(Number number);
+	abstract T power(Number base, Number exponent);
+
 }
