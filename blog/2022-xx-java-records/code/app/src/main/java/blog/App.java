@@ -1,12 +1,15 @@
 
 package blog;
 
+import static java.lang.System.out;
+
+import java.util.UUID;
+
 public class App {
-    public String getGreeting() {
-        return "Hello World!";
-    }
 
     public static void main(String[] args) {
-        System.out.println(new App().getGreeting());
+        out.println(new blog.records.Customer(UUID.randomUUID(), ""));
+
+
     }
 }

@@ -1,3 +1,5 @@
 package blog.records;
 
-public record Customer(String id, String name) {}
+import java.util.UUID;
+
+public record Customer(UUID id, String name) {}
