@@ -27,6 +27,7 @@ repositories {
 dependencies {
     // This dependency is used by the application.
     implementation("com.google.guava:guava:30.1.1-jre")
+    implementation("com.fasterxml.jackson.core:jackson-databind:2.12.5")
 }
 
 testing {

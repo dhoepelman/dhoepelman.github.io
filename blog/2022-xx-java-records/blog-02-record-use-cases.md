@@ -129,3 +129,33 @@ record Customer(String firstName, String lastName) {
     }
 }
 ```
+
+Just like with POJO's, these values are lazily calculated and not cached.
+Unlike with POJO's, you cannot make this eager and/or cached by adding a field, because records *are not allowed to have fields*:
+
+```
+record Customer(String firstName, String lastName) {
+    // This will give a compile error, records are not allowed to have instance fields
+    private final String fullName = String.format("%s %s", firstName, lastName)
+}
+```
+
+The only alternative is to add the data as a record component and add an alternate constructor,
+but do note that this makes the data a default value instead of a derived value.
+
+```java
+record Customer(String firstName, String lastName, String fullName) {
+    Customer(String fistName, String lastName) {
+        fullName = String.format("%s %s", firstName, lastName);
+    }
+}
+
+// Nothing now prevents you from making a record with different data for fullName
+Customer invalidFullName = new Customer("John", "Johnson", "Different full name");
+```
+
+#### JSON and Data Transfer Objects
+
+Another important use case for records is to transfer data with a REST API or to and from the database.
+For JSON this is often done with the Jackson library.
+Continue on to [part 3: Records and Jackson to learn about this](blog-03-records-with-jackson.md).

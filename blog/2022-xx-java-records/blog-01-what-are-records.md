@@ -69,5 +69,5 @@ Now let's see the equivalent record implementation:
 record Customer(String id, String name) {}
 ```
 
-Need we say more? Thank you for reading this far. You can now stop reading and start using records everywhere,
+Need we say more? You can now stop reading and start using records everywhere,
 or you can continue on to [part 2: how you use records in practice](blog-02-record-use-cases.md).
