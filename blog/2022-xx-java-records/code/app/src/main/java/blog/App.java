@@ -13,6 +13,6 @@ public class App {
     public static void main(String[] args) {
         out.println(new blog.records.Customer(UUID.randomUUID(), ""));
 
-        var customer = new blog.jackson.Customer();
+        var customer = new blog.jackson.Customer(UUID.randomUUID(), "");
     }
 }

@@ -1,19 +1,20 @@
 #### How to use records
 
-Using a record is almost exactly like using an immutable POJO, you create it using a constructor:
+Using a record is almost exactly like using an immutable POJO.
+Creating is done using the constructor:
 
 ```java
 var customer = new Customer(UUID.randomUUID(), "John");
 ```
 
-Retrieving the data is still using getters, which are the same as the field names.
-Note that Javabean conventions are not used, so a getter is called `x()` and not `getX()`.
+Retrieving the data is still using getters, which have the same name as <a title="A record">the record components</a>.
+Note that JavaBean conventions are not used, so a getter is called `x()` and not `getX()`.
 
 ```java
 var name = customer.name();
 ```
 
-##### Javadoc
+##### Documentation
 
 Documentation for records and components uses the existing `@param` javadoc tag:
 
@@ -24,27 +25,6 @@ Documentation for records and components uses the existing `@param` javadoc tag:
 * @param name customer name
 */
 record Customer(UUID id, String name) {}
-```
-
-##### Modifying records
-
-Unfortunately records are not as easy to modify as their equivalents in other languages.
-The best you can do is either to manually add `with`-er or a `copy` method,
-or use an annotation processor to provide this functionality such as [record-builder](https://github.com/randgalt/record-builder).
-
-```java
-record Customer(UUID id, String name) {
-    Customer withName(String name) {
-        return new Customer(id, name);
-    }
-}
-```
-
-This will likely be improved in a future version of Java.
-There is no definitive verdict yet, but [in June 2022 the language designers were considering this syntax](https://mail.openjdk.org/pipermail/amber-spec-experts/2022-June/003461.html):
-
-```java
-var renamed = customer with { name = "newName"; }
 ```
 
 ##### Default values
@@ -59,6 +39,37 @@ record Customer(UUID id, String name) {
         this(UUID.randomUUID(), name);
     }
 }
+```
+
+##### Modifying records
+
+Unfortunately records are not as easy to modify as their equivalents in other languages.
+There are currently two viable options to modify records. [A future version of Java might support the use case better]([the language designers are considering this syntax](https://mail.openjdk.org/pipermail/amber-spec-experts/2022-June/003461.html):).
+
+###### Manually add wither methods.
+
+In plain Java, you can manually specify a method that returns a modified copy.
+The most common naming convention for this is `withX`, causing these to be called with-er or wither methods.
+
+```java
+record Customer(UUID id, String name) {
+    Customer withName(String name) {
+        return new Customer(id, name);
+    }
+}
+```
+
+###### Use a compiler plugin
+
+The above is not particularly user-friendly.
+Luckily compiler plugins can provide the missing feature, most notably [RecordBuilder](https://github.com/Randgalt/record-builder):
+
+```java
+@RecordBuilder
+record Customer(UUID id, String name) {}
+
+// will add with-er methods to the record
+Customer newName = customer.withName("John");
 ```
 
 ##### Validation
@@ -107,7 +118,7 @@ record Customer(UUID id, String name) {
 ##### Enforcing non-nullability
 
 Records do not have any special behavior regarding nullability of components.
-You can use tools like [NullAway](https://github.com/uber/NullAway) or [Error Prone](https://errorprone.info/) to prevent `null` in your code in general, or you can add checks to your records:
+You can use tools like [NullAway](https://github.com/uber/NullAway) or [Error Prone](https://errorprone.info/) to prevent `null` in your code in general, and/or you can add checks to your records:
 
 ```java
 record Customer(UUID id, String name) {

@@ -5,7 +5,7 @@ Let's see how we can use it.
 
 #### Reading or writing a record
 
-Records are supported out of the box since Jackson 2.12, and give equivalent output to their equivalent POJO
+Records are supported out of the box since Jackson 2.12, and work just as their equivalent POJO
 
 ```java
 record Customer(UUID id, String firstName) {}
@@ -20,7 +20,21 @@ can be read from or written as
 }
 ```
 
+All normal Jackson options and configuration will be respected.
+
 #### Annotations like JsonAlias, JsonValue or 
 
 TODO: describe BUG
+
+#### Leaving out components
+
+#### Adding additional data to serialized JSON
+
+#### Default values
+
+#### Validation
+
+#### Normalization
+
+
 
